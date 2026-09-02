@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - PromptPro</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        /* Same as signin.html styles */
+        .auth-page { max-width: 450px; margin: 4rem auto; padding: 0 2rem; }
+        .auth-card { background: #fff; padding: 2.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .auth-card h1 { text-align: center; margin-bottom: 1.5rem; }
+        .auth-card label { display: block; font-weight: 600; margin-bottom: 0.2rem; }
+        .auth-card input { width: 100%; padding: 0.7rem 1rem; border: 2px solid #eee; border-radius: 10px; margin-bottom: 1.2rem; font-size: 1rem; transition: border 0.3s; }
+        .auth-card input:focus { border-color: #e94560; outline: none; }
+        .auth-card button { width: 100%; background: #e94560; color: #fff; border: none; padding: 0.8rem; border-radius: 50px; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: background 0.3s; }
+        .auth-card button:hover { background: #c73a52; }
+        .auth-card .auth-link { text-align: center; margin-top: 1rem; color: #555; }
+        .auth-card .auth-link a { color: #e94560; font-weight: 600; }
+        #authMessage { text-align: center; margin-top: 0.8rem; color: #e94560; }
+        .auth-card .google-btn { background: #fff; color: #333; border: 2px solid #ddd; margin-top: 0.5rem; display: flex; justify-content: center; align-items: center; gap: 0.5rem; }
+        .auth-card .google-btn:hover { background: #f5f5f5; border-color: #bbb; }
+        .divider { text-align: center; color: #aaa; margin: 0.8rem 0; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-wand-magic-sparkles"></i> PromptPro
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="signin.html" class="btn-auth" id="authBtn">Sign In</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="auth-page">
+        <div class="auth-card">
+            <h1>✨ Create Account</h1>
+            <form id="signupForm">
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" placeholder="you@example.com" required />
+
+                <label for="signupPassword">Password (6+ chars)</label>
+                <input type="password" id="signupPassword" placeholder="••••••••" required minlength="6" />
+
+                <button type="submit">Sign Up</button>
+                <p id="authMessage"></p>
+            </form>
+
+            <div class="divider">or</div>
+            <button class="google-btn" id="googleSignUp">
+                <i class="fab fa-google"></i> Sign up with Google
+            </button>
+
+            <div class="auth-link">
+                Already have an account? <a href="signin.html">Sign In</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 PromptPro. All rights reserved.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script>
+        const auth = firebase.auth();
+
+        document.getElementById('signupForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const msg = document.getElementById('authMessage');
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(() => {
+                    msg.textContent = '✅ Account created! Redirecting...';
+                    msg.style.color = '#4ecdc4';
+                    setTimeout(() => window.location.href = 'index.html', 1000);
+                })
+                .catch(err => {
+                    msg.textContent = '❌ ' + err.message;
+                    msg.style.color = '#e94560';
+                });
+        });
+
+        document.getElementById('googleSignUp')?.addEventListener('click', function() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(() => {
+                    window.location.href = 'index.html';
+                })
+                .catch(err => {
+                    document.getElementById('authMessage').textContent = '❌ ' + err.message;
+                });
+        });
+
+        document.getElementById('navToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
