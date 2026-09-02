@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In - PromptPro</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        .auth-page {
+            max-width: 450px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .auth-card {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .auth-card h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .auth-card label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        .auth-card input {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        .auth-card input:focus {
+            border-color: #e94560;
+            outline: none;
+        }
+        .auth-card button {
+            width: 100%;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .auth-card button:hover {
+            background: #c73a52;
+        }
+        .auth-card .auth-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #555;
+        }
+        .auth-card .auth-link a {
+            color: #e94560;
+            font-weight: 600;
+        }
+        #authMessage {
+            text-align: center;
+            margin-top: 0.8rem;
+            color: #e94560;
+        }
+        .auth-card .google-btn {
+            background: #fff;
+            color: #333;
+            border: 2px solid #ddd;
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .auth-card .google-btn:hover {
+            background: #f5f5f5;
+            border-color: #bbb;
+        }
+        .divider {
+            text-align: center;
+            color: #aaa;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-wand-magic-sparkles"></i> PromptPro
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="signin.html" class="btn-auth" id="authBtn">Sign In</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="auth-page">
+        <div class="auth-card">
+            <h1>🔐 Sign In</h1>
+            <form id="signinForm">
+                <label for="signinEmail">Email</label>
+                <input type="email" id="signinEmail" placeholder="you@example.com" required />
+
+                <label for="signinPassword">Password</label>
+                <input type="password" id="signinPassword" placeholder="••••••••" required />
+
+                <button type="submit">Sign In</button>
+                <p id="authMessage"></p>
+            </form>
+
+            <div class="divider">or</div>
+            <button class="google-btn" id="googleSignIn">
+                <i class="fab fa-google"></i> Sign in with Google
+            </button>
+
+            <div class="auth-link">
+                Don't have an account? <a href="signup.html">Sign Up</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 PromptPro. All rights reserved.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script>
+        // Firebase already initialized in firebase-config.js
+        const auth = firebase.auth();
+
+        // Sign in with email/password
+        document.getElementById('signinForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('signinEmail').value;
+            const password = document.getElementById('signinPassword').value;
+            const msg = document.getElementById('authMessage');
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    msg.textContent = '✅ Signed in! Redirecting...';
+                    msg.style.color = '#4ecdc4';
+                    setTimeout(() => window.location.href = 'index.html', 1000);
+                })
+                .catch(err => {
+                    msg.textContent = '❌ ' + err.message;
+                    msg.style.color = '#e94560';
+                });
+        });
+
+        // Google sign-in
+        document.getElementById('googleSignIn')?.addEventListener('click', function() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then(() => {
+                    window.location.href = 'index.html';
+                })
+                .catch(err => {
+                    document.getElementById('authMessage').textContent = '❌ ' + err.message;
+                });
+        });
+
+        // Nav toggle
+        document.getElementById('navToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
