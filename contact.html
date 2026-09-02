@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - PromptPro</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        .contact-page {
+            max-width: 700px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        .contact-page h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .contact-page p {
+            text-align: center;
+            color: #555;
+            margin-bottom: 2rem;
+        }
+        .contact-form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .contact-form label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            transition: border 0.3s;
+            font-family: inherit;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #e94560;
+            outline: none;
+        }
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .contact-form button {
+            background: #e94560;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .contact-form button:hover {
+            background: #c73a52;
+            transform: scale(1.02);
+        }
+        #contactMessage {
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .contact-page {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-wand-magic-sparkles"></i> PromptPro
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="signin.html" class="btn-auth" id="authBtn">Sign In</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="contact-page">
+        <h1>📬 Contact Us</h1>
+        <p>Have questions? We'd love to hear from you.</p>
+        <form class="contact-form" id="contactForm">
+            <label for="contactName">Your Name</label>
+            <input type="text" id="contactName" placeholder="John Doe" required />
+
+            <label for="contactEmail">Email Address</label>
+            <input type="email" id="contactEmail" placeholder="john@example.com" required />
+
+            <label for="contactSubject">Subject</label>
+            <input type="text" id="contactSubject" placeholder="Question about prompts" required />
+
+            <label for="contactMessageText">Message</label>
+            <textarea id="contactMessageText" placeholder="Write your message here..." required></textarea>
+
+            <button type="submit">Send Message</button>
+            <p id="contactMessage"></p>
+        </form>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 PromptPro. All rights reserved.</p>
+    </footer>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        document.getElementById('contactForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessageText').value;
+
+            // Simple demo: store in localStorage or show success
+            const msg = `✅ Thanks ${name}! We've received your message and will reply within 24 hours.`;
+            document.getElementById('contactMessage').textContent = msg;
+            document.getElementById('contactMessage').style.color = '#4ecdc4';
+            this.reset();
+        });
+
+        document.getElementById('navToggle')?.addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
