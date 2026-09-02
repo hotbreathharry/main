@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PromptPro - Premium Design Prompts</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+    <!-- ====== NAVIGATION ====== -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <i class="fas fa-wand-magic-sparkles"></i> PromptPro
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="signin.html" class="btn-auth" id="authBtn">Sign In</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ====== HERO SECTION ====== -->
+    <section class="hero">
+        <h1>🚀 Go Unlimited, Get Premium</h1>
+        <p>Copy professional design prompts instantly. Upgrade for unlimited access.</p>
+        <a href="subscription.html" class="btn-hero">Subscribe Now</a>
+    </section>
+
+    <!-- ====== FILTER BAR ====== -->
+    <div class="filter-bar">
+        <div class="filter-group">
+            <label for="pricingFilter">Pricing</label>
+            <select id="pricingFilter">
+                <option value="all">All</option>
+                <option value="free">Free</option>
+                <option value="premium">Premium</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="sortFilter">Sort</label>
+            <select id="sortFilter">
+                <option value="featured">Featured</option>
+                <option value="popular">Popular</option>
+                <option value="recent">Recent</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- ====== PRODUCT GRID ====== -->
+    <main class="product-grid" id="productGrid">
+        <!-- Products will be injected by JavaScript -->
+    </main>
+
+    <!-- ====== EMAIL NOTIFICATION ====== -->
+    <section class="notify-section">
+        <h2>📬 Get Notified</h2>
+        <p>Enter your email to be notified when new prompts drop!</p>
+        <form id="notifyForm">
+            <input type="email" id="notifyEmail" placeholder="Your email address" required />
+            <button type="submit">Notify Me</button>
+        </form>
+        <p id="notifyMessage"></p>
+    </section>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="footer">
+        <p>&copy; 2026 PromptPro. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
